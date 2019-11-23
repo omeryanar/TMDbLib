@@ -7,6 +7,7 @@ using TMDbLib.Objects.Authentication;
 using TMDbLib.Objects.Changes;
 using TMDbLib.Objects.General;
 using TMDbLib.Objects.Search;
+using TMDbLib.Objects.Translations;
 using TMDbLib.Objects.TvShows;
 using TMDbLib.Rest;
 using TMDbLib.Utilities;
@@ -49,6 +50,11 @@ namespace TMDbLib.Client
         public async Task<ResultContainer<AlternativeTitle>> GetTvShowAlternativeTitlesAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
         {
             return await GetTvShowMethod<ResultContainer<AlternativeTitle>>(id, TvShowMethods.AlternativeTitles, cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        public async Task<TvShow> GetTvShowAsync(int id, TvShowMethods extraMethods = TvShowMethods.Undefined, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return await GetTvShowAsync(id, extraMethods, DefaultLanguage, cancellationToken);
         }
 
         /// <summary>
@@ -288,9 +294,9 @@ namespace TMDbLib.Client
             return await GetTvShowListAsync(page, language, "top_rated", cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<TranslationsContainerTv> GetTvShowTranslationsAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<TranslationsContainer<TranslationTvShow>> GetTvShowTranslationsAsync(int id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await GetTvShowMethod<TranslationsContainerTv>(id, TvShowMethods.Translations, cancellationToken: cancellationToken).ConfigureAwait(false);
+            return await GetTvShowMethod<TranslationsContainer<TranslationTvShow>>(id, TvShowMethods.Translations, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         public async Task<ResultContainer<Video>> GetTvShowVideosAsync(int id, CancellationToken cancellationToken = default(CancellationToken))

@@ -11,6 +11,7 @@ using TMDbLib.Objects.General;
 using TMDbLib.Objects.Movies;
 using TMDbLib.Objects.Reviews;
 using TMDbLib.Objects.Search;
+using TMDbLib.Objects.Translations;
 using TMDbLib.Rest;
 using TMDbLib.Utilities;
 using Credits = TMDbLib.Objects.Movies.Credits;
@@ -313,9 +314,9 @@ namespace TMDbLib.Client
             return resp;
         }
 
-        public async Task<TranslationsContainer> GetMovieTranslationsAsync(int movieId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<TranslationsContainer<TranslationMovie>> GetMovieTranslationsAsync(int movieId, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await GetMovieMethod<TranslationsContainer>(movieId, MovieMethods.Translations, cancellationToken: cancellationToken).ConfigureAwait(false);
+            return await GetMovieMethod<TranslationsContainer<TranslationMovie>>(movieId, MovieMethods.Translations, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         public async Task<SearchContainerWithDates<SearchMovie>> GetMovieUpcomingListAsync(string language = null, int page = 0, string region = null, CancellationToken cancellationToken = default(CancellationToken))

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using TMDbLib.Objects.Changes;
 using TMDbLib.Objects.General;
+using TMDbLib.Objects.Translations;
 using TMDbLib.Utilities.Converters;
 
 namespace TMDbLib.Objects.People
@@ -47,6 +48,9 @@ namespace TMDbLib.Objects.People
         [JsonProperty("imdb_id")]
         public string ImdbId { get; set; }
 
+        [JsonProperty("known_for_department")]
+        public string KnownForDepartment { get; set; }
+
         [JsonProperty("movie_credits")]
         public MovieCredits MovieCredits { get; set; }
 
@@ -64,6 +68,9 @@ namespace TMDbLib.Objects.People
 
         [JsonProperty("tagged_images")]
         public SearchContainer<TaggedImage> TaggedImages { get; set; }
+
+        [JsonProperty("translations")]
+        public TranslationsContainer<TranslationPerson> Translations { get; set; }
 
         [JsonProperty("tv_credits")]
         public TvCredits TvCredits { get; set; }

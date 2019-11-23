@@ -5,6 +5,7 @@ using TMDbLib.Objects.Changes;
 using TMDbLib.Objects.General;
 using TMDbLib.Objects.Movies;
 using TMDbLib.Objects.Search;
+using TMDbLib.Objects.Translations;
 using TMDbLib.Utilities.Converters;
 
 namespace TMDbLib.Objects.TvShows
@@ -128,7 +129,7 @@ namespace TMDbLib.Objects.TvShows
         public string Status { get; set; }
 
         [JsonProperty("translations")]
-        public TranslationsContainer Translations { get; set; }
+        public TranslationsContainer<TranslationTvShow> Translations { get; set; }
 
         [JsonProperty("type")]
         public string Type { get; set; }

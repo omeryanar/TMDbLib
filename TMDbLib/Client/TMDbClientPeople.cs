@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TMDbLib.Objects.Changes;
 using TMDbLib.Objects.General;
 using TMDbLib.Objects.People;
+using TMDbLib.Objects.Search;
 using TMDbLib.Rest;
 using TMDbLib.Utilities;
 
@@ -70,6 +71,9 @@ namespace TMDbLib.Client
 
                 if (item.MovieCredits != null)
                     item.MovieCredits.Id = item.Id;
+
+                if (item.Translations != null)
+                    item.Translations.Id = item.Id;
             }
 
             return item;
@@ -91,7 +95,7 @@ namespace TMDbLib.Client
             return await GetPersonMethod<ProfileImages>(personId, PersonMethods.Images, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<SearchContainer<PersonResult>> GetPersonListAsync(PersonListType type, int page = 0, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<SearchContainer<SearchPerson>> GetPersonListAsync(PersonListType type, string language = null, int page = 0, CancellationToken cancellationToken = default(CancellationToken))
         {
             RestRequest req;
             switch (type)
@@ -104,13 +108,16 @@ namespace TMDbLib.Client
                     throw new ArgumentOutOfRangeException(nameof(type));
             }
 
+            if (language != null)
+                req.AddParameter("language", language);
+
             if (page >= 1)
                 req.AddParameter("page", page.ToString());
 
             // TODO: Dateformat?
             //req.DateFormat = "yyyy-MM-dd";
 
-            RestResponse<SearchContainer<PersonResult>> resp = await req.ExecuteGet<SearchContainer<PersonResult>>(cancellationToken).ConfigureAwait(false);
+            RestResponse<SearchContainer<SearchPerson>> resp = await req.ExecuteGet<SearchContainer<SearchPerson>>(cancellationToken).ConfigureAwait(false);
 
             return resp;
         }

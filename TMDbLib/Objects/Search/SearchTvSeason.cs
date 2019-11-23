@@ -25,5 +25,8 @@ namespace TMDbLib.Objects.Search
 
         [JsonProperty("season_number")]
         public int SeasonNumber { get; set; }
+
+        [JsonProperty("show_id")]
+        public int ShowId { get; set; }
     }
 }

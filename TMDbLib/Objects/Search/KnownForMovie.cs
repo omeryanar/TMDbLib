@@ -24,6 +24,6 @@ namespace TMDbLib.Objects.Search
         public string Title { get; set; }
 
         [JsonProperty("video")]
-        public bool Vide { get; set; }
+        public bool Video { get; set; }
     }
 }

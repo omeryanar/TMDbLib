@@ -10,7 +10,7 @@ namespace TMDbLib.Objects.Find
         public List<SearchMovie> MovieResults { get; set; }
 
         [JsonProperty("person_results")]
-        public List<FindPerson> PersonResults { get; set; } // Unconfirmed type
+        public List<SearchPerson> PersonResults { get; set; }
 
         [JsonProperty("tv_episode_results")]
         public List<SearchTvEpisode> TvEpisode { get; set; }
@@ -19,6 +19,6 @@ namespace TMDbLib.Objects.Find
         public List<SearchTv> TvResults { get; set; }
 
         [JsonProperty("tv_season_results")]
-        public List<FindTvSeason> TvSeason { get; set; }
+        public List<SearchTvSeason> TvSeason { get; set; }
     }
 }

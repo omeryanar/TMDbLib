@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace TMDbLib.Objects.General
+namespace TMDbLib.Objects.Translations
 {
-    public class Translation
+    public class Translation<T>
     {
         [JsonProperty("english_name")]
         public string EnglishName { get; set; }
@@ -18,5 +18,8 @@ namespace TMDbLib.Objects.General
 
         [JsonProperty("name")]
         public string Name { get; set; }
+
+        [JsonProperty("data")]
+        public T Data { get; set; }
     }
 }

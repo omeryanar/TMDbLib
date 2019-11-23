@@ -15,8 +15,14 @@ namespace TMDbLib.Objects.Search
         [JsonProperty("adult")]
         public bool Adult { get; set; }
 
+        [JsonProperty("gender")]
+        public PersonGender Gender { get; set; }
+
         [JsonProperty("known_for")]
         public List<KnownForBase> KnownFor { get; set; }
+
+        [JsonProperty("known_for_department")]
+        public string KnownForDepartment { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }

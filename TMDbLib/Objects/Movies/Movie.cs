@@ -5,6 +5,7 @@ using TMDbLib.Objects.Changes;
 using TMDbLib.Objects.General;
 using TMDbLib.Objects.Reviews;
 using TMDbLib.Objects.Search;
+using TMDbLib.Objects.Translations;
 
 namespace TMDbLib.Objects.Movies
 {
@@ -116,7 +117,7 @@ namespace TMDbLib.Objects.Movies
         public string Title { get; set; }
 
         [JsonProperty("translations")]
-        public TranslationsContainer Translations { get; set; }
+        public TranslationsContainer<TranslationMovie> Translations { get; set; }
 
         [JsonProperty("video")]
         public bool Video { get; set; }

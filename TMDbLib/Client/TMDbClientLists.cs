@@ -15,13 +15,16 @@ namespace TMDbLib.Client
         /// </summary>
         /// <param name="listId">The id of the list you want to retrieve</param>
         /// <param name="cancellationToken">A cancellation token</param>
-        public async Task<GenericList> GetListAsync(string listId, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<GenericList> GetListAsync(string listId, string language = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrWhiteSpace(listId))
                 throw new ArgumentNullException(nameof(listId));
 
             RestRequest req = _client.Create("list/{listId}");
             req.AddUrlSegment("listId", listId);
+
+            if (language != null)
+                req.AddParameter("language", language);
 
             RestResponse<GenericList> resp = await req.ExecuteGet<GenericList>(cancellationToken).ConfigureAwait(false);
 
