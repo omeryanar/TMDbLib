@@ -34,7 +34,8 @@ namespace TMDbLib.Utilities
         {
             Remove(key);
 
-            _list.Add(new KeyValuePair<string, string>(key, value));
+            if (!String.IsNullOrWhiteSpace(value) && value != "0")
+                _list.Add(new KeyValuePair<string, string>(key, value));
         }
 
         public string Get(string key, string @default = null)

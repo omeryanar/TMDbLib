@@ -8,15 +8,15 @@ namespace TMDbLib.Objects.Discover
         [Obsolete]
         Undefined,
         [EnumValue("vote_average.asc")]
-        VoteAverage,
+        VoteAverageAsc,
         [EnumValue("vote_average.desc")]
         VoteAverageDesc,
         [EnumValue("first_air_date.asc")]
-        FirstAirDate,
+        FirstAirDateAsc,
         [EnumValue("first_air_date.desc")]
         FirstAirDateDesc,
         [EnumValue("popularity.asc")]
-        Popularity,
+        PopularityAsc,
         [EnumValue("popularity.desc")]
         PopularityDesc
     }

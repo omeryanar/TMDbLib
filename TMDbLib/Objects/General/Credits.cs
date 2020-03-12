@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using TMDbLib.Objects.General;
 
-namespace TMDbLib.Objects.Movies
+namespace TMDbLib.Objects.General
 {
     public class Credits
     {

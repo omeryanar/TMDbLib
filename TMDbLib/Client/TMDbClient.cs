@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using TMDbLib.Objects.Account;
 using TMDbLib.Objects.Authentication;
-using TMDbLib.Objects.General;
+using TMDbLib.Objects.Configuration;
 using TMDbLib.Utilities.Converters;
 using ParameterType = TMDbLib.Rest.ParameterType;
 using RestClient = TMDbLib.Rest.RestClient;
@@ -20,7 +20,7 @@ namespace TMDbLib.Client
 
         private readonly JsonSerializer _serializer;
         private RestClient _client;
-        private TMDbConfig _config;
+        private APIConfiguration _config;
 
         public TMDbClient(string apiKey, bool useSsl = true, string baseUrl = ProductionUrl, JsonSerializer serializer = null, IWebProxy proxy = null)
         {
@@ -30,7 +30,6 @@ namespace TMDbLib.Client
             _serializer = serializer ?? JsonSerializer.CreateDefault();
             _serializer.Converters.Add(new ChangeItemConverter());
             _serializer.Converters.Add(new AccountStateConverter());
-            _serializer.Converters.Add(new KnownForConverter());
             _serializer.Converters.Add(new SearchBaseConverter());
             _serializer.Converters.Add(new TaggedImageConverter());
             _serializer.Converters.Add(new TolerantEnumConverter());
@@ -50,7 +49,7 @@ namespace TMDbLib.Client
 
         public string ApiKey { get; private set; }
 
-        public TMDbConfig Config
+        public APIConfiguration Config
         {
             get
             {
@@ -148,9 +147,9 @@ namespace TMDbLib.Client
             throw new UserSessionRequiredException();
         }
 
-        public async Task<TMDbConfig> GetConfigAsync()
+        public async Task<APIConfiguration> GetConfigAsync()
         {
-            TMDbConfig config = await _client.Create("configuration").ExecuteGet<TMDbConfig>(CancellationToken.None);
+            APIConfiguration config = await _client.Create("configuration").ExecuteGet<APIConfiguration>(CancellationToken.None);
 
             if (config == null)
                 throw new Exception("Unable to retrieve configuration");
@@ -209,7 +208,7 @@ namespace TMDbLib.Client
                 throw new UserSessionRequiredException();
         }
 
-        public void SetConfig(TMDbConfig config)
+        public void SetConfig(APIConfiguration config)
         {
             // Store config
             Config = config;

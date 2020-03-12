@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-
 namespace TMDbLib.Objects.Configuration
 {
     public class APIConfigurationImages

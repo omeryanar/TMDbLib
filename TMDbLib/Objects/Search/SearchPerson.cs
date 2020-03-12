@@ -19,7 +19,7 @@ namespace TMDbLib.Objects.Search
         public PersonGender Gender { get; set; }
 
         [JsonProperty("known_for")]
-        public List<KnownForBase> KnownFor { get; set; }
+        public List<SearchBase> KnownFor { get; set; }
 
         [JsonProperty("known_for_department")]
         public string KnownForDepartment { get; set; }

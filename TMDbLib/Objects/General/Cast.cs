@@ -1,13 +1,10 @@
 ﻿using Newtonsoft.Json;
 using TMDbLib.Objects.People;
 
-namespace TMDbLib.Objects.Movies
+namespace TMDbLib.Objects.General
 {
     public class Cast
     {
-        [JsonProperty("cast_id")]
-        public int CastId { get; set; }
-
         [JsonProperty("character")]
         public string Character { get; set; }
 

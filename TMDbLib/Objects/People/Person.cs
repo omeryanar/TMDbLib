@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using TMDbLib.Objects.Changes;
 using TMDbLib.Objects.General;
+using TMDbLib.Objects.Search;
 using TMDbLib.Objects.Translations;
 using TMDbLib.Utilities.Converters;
 
 namespace TMDbLib.Objects.People
 {
-    public class Person
+    public class Person : SearchPerson
     {
-        [JsonProperty("adult")]
-        public bool Adult { get; set; }
+        public new List<SearchMovieTvBase> KnownFor 
+        {
+            get => KnownForDepartment == "Acting" ? MovieCredits?.Cast?.Cast<SearchMovieTvBase>().Union(TvCredits?.Cast?.Cast<SearchMovieTvBase>())?.OrderByDescending(x => x.VoteAverage * x.VoteCount).Take(8).ToList() :
+                MovieCredits?.Crew?.Where(x => x.Department == KnownForDepartment)?.Cast<SearchMovieTvBase>().Union
+                (TvCredits?.Crew?.Where(x => x.Department == KnownForDepartment)?.Cast<SearchMovieTvBase>())?.OrderByDescending(x => x.VoteAverage * x.VoteCount).Take(8).ToList();
+        }
 
         [JsonProperty("also_known_as")]
         public List<string> AlsoKnownAs { get; set; }
@@ -33,14 +39,8 @@ namespace TMDbLib.Objects.People
         [JsonProperty("external_ids")]
         public ExternalIdsPerson ExternalIds { get; set; }
 
-        [JsonProperty("gender")]
-        public PersonGender Gender { get; set; }
-
         [JsonProperty("homepage")]
         public string Homepage { get; set; }
-
-        [JsonProperty("id")]
-        public int Id { get; set; }
 
         [JsonProperty("images")]
         public ProfileImages Images { get; set; }
@@ -48,23 +48,11 @@ namespace TMDbLib.Objects.People
         [JsonProperty("imdb_id")]
         public string ImdbId { get; set; }
 
-        [JsonProperty("known_for_department")]
-        public string KnownForDepartment { get; set; }
-
         [JsonProperty("movie_credits")]
         public MovieCredits MovieCredits { get; set; }
 
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
         [JsonProperty("place_of_birth")]
         public string PlaceOfBirth { get; set; }
-
-        [JsonProperty("popularity")]
-        public double Popularity { get; set; }
-
-        [JsonProperty("profile_path")]
-        public string ProfilePath { get; set; }
 
         [JsonProperty("tagged_images")]
         public SearchContainer<TaggedImage> TaggedImages { get; set; }

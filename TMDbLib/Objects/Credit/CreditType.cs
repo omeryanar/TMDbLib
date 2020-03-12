@@ -1,6 +1,6 @@
 ﻿using TMDbLib.Utilities;
 
-namespace TMDbLib.Objects.General
+namespace TMDbLib.Objects.Credit
 {
     public enum CreditType
     {

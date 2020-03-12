@@ -8,31 +8,31 @@ namespace TMDbLib.Objects.Discover
         [Obsolete]
         Undefined,
         [EnumValue("popularity.asc")]
-        Popularity,
+        PopularityAsc,
         [EnumValue("popularity.desc")]
         PopularityDesc,
         [EnumValue("release_date.asc")]
-        ReleaseDate,
+        ReleaseDateAsc,
         [EnumValue("release_date.desc")]
         ReleaseDateDesc,
         [EnumValue("revenue.asc")]
-        Revenue,
+        RevenueAsc,
         [EnumValue("revenue.desc")]
         RevenueDesc,
         [EnumValue("primary_release_date.asc")]
-        PrimaryReleaseDate,
+        PrimaryReleaseDateAsc,
         [EnumValue("primary_release_date.desc")]
         PrimaryReleaseDateDesc,
         [EnumValue("original_title.asc")]
-        OriginalTitle,
+        OriginalTitleAsc,
         [EnumValue("original_title.desc")]
         OriginalTitleDesc,
         [EnumValue("vote_average.asc")]
-        VoteAverage,
+        VoteAverageAsc,
         [EnumValue("vote_average.desc")]
         VoteAverageDesc,
         [EnumValue("vote_count.asc")]
-        VoteCount,
+        VoteCountAsc,
         [EnumValue("vote_count.desc")]
         VoteCountDesc
     }

@@ -1,25 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using TMDbLib.Objects.Changes;
 using TMDbLib.Objects.General;
-using TMDbLib.Objects.Movies;
 using TMDbLib.Objects.Search;
 using TMDbLib.Objects.Translations;
 using TMDbLib.Utilities.Converters;
 
 namespace TMDbLib.Objects.TvShows
 {
-    public class TvShow
+    public class TvShow : SearchTv
     {
+        public new List<int> GenreIds { get => Genres?.Select(x => x.Id).ToList(); }
+
         [JsonProperty("account_states")]
         public AccountState AccountStates { get; set; }
 
         [JsonProperty("alternative_titles")]
         public ResultContainer<AlternativeTitle> AlternativeTitles { get; set; }
-
-        [JsonProperty("backdrop_path")]
-        public string BackdropPath { get; set; }
 
         [JsonProperty("changes")]
         public ChangesContainer Changes { get; set; }
@@ -39,20 +38,11 @@ namespace TMDbLib.Objects.TvShows
         [JsonProperty("external_ids")]
         public ExternalIdsTvShow ExternalIds { get; set; }
 
-        [JsonProperty("first_air_date")]
-        public DateTime? FirstAirDate { get; set; }
-
-        [JsonProperty("genre_ids")]
-        public List<int> GenreIds { get; set; }
-
         [JsonProperty("genres")]
         public List<Genre> Genres { get; set; }
 
         [JsonProperty("homepage")]
         public string Homepage { get; set; }
-
-        [JsonProperty("id")]
-        public int Id { get; set; }
 
         [JsonProperty("images")]
         public Images Images { get; set; }
@@ -75,9 +65,6 @@ namespace TMDbLib.Objects.TvShows
         [JsonProperty("last_episode_to_air")]
         public TvEpisodeBase LastEpisodeToAir { get; set; }
 
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
         [JsonProperty("next_episode_to_air")]
         public TvEpisodeBase NextEpisodeToAir { get; set; }
 
@@ -92,27 +79,6 @@ namespace TMDbLib.Objects.TvShows
         [JsonConverter(typeof(TmdbNullIntAsZero))]
         public int NumberOfSeasons { get; set; }
 
-        [JsonProperty("original_language")]
-        public string OriginalLanguage { get; set; }
-
-        [JsonProperty("original_name")]
-        public string OriginalName { get; set; }
-
-        /// <summary>
-        /// Country ISO code ex. US
-        /// </summary>
-        [JsonProperty("origin_country")]
-        public List<string> OriginCountry { get; set; }
-
-        [JsonProperty("overview")]
-        public string Overview { get; set; }
-
-        [JsonProperty("popularity")]
-        public double Popularity { get; set; }
-
-        [JsonProperty("poster_path")]
-        public string PosterPath { get; set; }
-
         [JsonProperty("production_companies")]
         public List<ProductionCompany> ProductionCompanies { get; set; }
 
@@ -120,10 +86,10 @@ namespace TMDbLib.Objects.TvShows
         public List<SearchTvSeason> Seasons { get; set; }
 
         [JsonProperty("similar")]
-        public ResultContainer<TvShow> Similar { get; set; }
+        public ResultContainer<SearchTv> Similar { get; set; }
 
         [JsonProperty("recommendations")]
-        public ResultContainer<TvShow> Recommendations { get; set; }
+        public ResultContainer<SearchTv> Recommendations { get; set; }
 
         [JsonProperty("status")]
         public string Status { get; set; }
@@ -136,11 +102,5 @@ namespace TMDbLib.Objects.TvShows
 
         [JsonProperty("videos")]
         public ResultContainer<Video> Videos { get; set; }
-
-        [JsonProperty("vote_average")]
-        public double VoteAverage { get; set; }
-
-        [JsonProperty("vote_count")]
-        public int VoteCount { get; set; }
     }
 }

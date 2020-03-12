@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using TMDbLib.Client;
+using TMDbLib.Objects.Configuration;
 using TMDbLib.Objects.General;
 using TMDbLib.Objects.Movies;
 using TMDbLib.Objects.Search;
@@ -20,9 +21,15 @@ namespace TestApplication
             // also specify if SSL should be used, and if another server address should be used.
             TMDbClient client = new TMDbClient("c6b31d1cdad6a56a23f0c913e2482a31");
 
+            //var tv = await client.GetTvShowAsync(82856, TMDbLib.Objects.TvShows.TvShowMethods.Credits, null);
+            var people = await client.GetPersonListAsync(TMDbLib.Objects.People.PersonListType.Popular);
+            var person = await client.GetPersonAsync(138);
+
+            //var movie = await client.GetMovieAsync(138);
+
             // We need the config from TMDb in case we want to get stuff like images
             // The config needs to be fetched for each new client we create, but we can cache it to a file (as in this example).
-            await FetchConfig(client);
+            //await FetchConfig(client);
 
             // Try fetching a movie
             await FetchMovieExample(client);
@@ -47,7 +54,7 @@ namespace TestApplication
                 Console.WriteLine("Using stored config");
                 string json = File.ReadAllText(configJson.FullName, Encoding.UTF8);
 
-                client.SetConfig(JsonConvert.DeserializeObject<TMDbConfig>(json));
+                client.SetConfig(JsonConvert.DeserializeObject<APIConfiguration>(json));
             }
             else
             {

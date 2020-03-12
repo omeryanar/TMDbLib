@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TMDbLib.Objects.Companies;
-using TMDbLib.Objects.General;
 using TMDbLib.Client;
+using TMDbLib.Objects.General;
 using TMDbLib.Objects.Search;
-using TMDbLib.Objects.TvShows;
 using TMDbLib.Utilities;
 
 namespace TMDbLib.Objects.Discover
@@ -15,37 +13,6 @@ namespace TMDbLib.Objects.Discover
         public DiscoverMovie(TMDbClient client)
             : base("discover/movie", client)
         {
-        }
-
-        private void ClearCertification()
-        {
-            Parameters.Remove("certification_country");
-            Parameters.Remove("certification");
-            Parameters.Remove("certification.lte");
-        }
-
-        private void ClearPrimaryReleaseDate()
-        {
-            Parameters.Remove("primary_release_date.gte");
-            Parameters.Remove("primary_release_date.lte");
-        }
-
-        private void ClearReleaseDate()
-        {
-            Parameters.Remove("release_date.gte");
-            Parameters.Remove("release_date.lte");
-        }
-
-        private void ClearVoteAverage()
-        {
-            Parameters.Remove("vote_average.gte");
-            Parameters.Remove("vote_average.lte");
-        }
-
-        private void ClearVoteCount()
-        {
-            Parameters.Remove("vote_count.gte");
-            Parameters.Remove("vote_count.lte");
         }
 
         /// <summary>
@@ -88,25 +55,6 @@ namespace TMDbLib.Objects.Discover
         }
 
         /// <summary>
-        /// Only include movies that have this company id added as a crew member. Expected value is an integer (the id of a company).
-        /// This method performs an AND query.
-        /// </summary>
-        public DiscoverMovie IncludeWithAllOfCompany(IEnumerable<int> companyIds)
-        {
-            Parameters["with_companies"] = string.Join(",", companyIds.Select(s => s.ToString()));
-            return this;
-        }
-
-        /// <summary>
-        /// Only include movies that have this company id added as a crew member.
-        /// This method performs an AND query.
-        /// </summary>
-        public DiscoverMovie IncludeWithAllOfCompany(IEnumerable<Company> companies)
-        {
-            return IncludeWithAllOfCompany(companies.Select(s => s.Id));
-        }
-
-        /// <summary>
         /// Only include movies that have this person id added as a crew member. Expected value is an integer (the id of a person).
         /// This method performs an AND query.
         /// </summary>
@@ -126,44 +74,6 @@ namespace TMDbLib.Objects.Discover
         }
 
         /// <summary>
-        /// Only include movies with the specified genres. Expected value is an integer (the id of a genre).
-        /// This method performs an AND query.
-        /// </summary>
-        public DiscoverMovie IncludeWithAllOfGenre(IEnumerable<int> castIds)
-        {
-            Parameters["with_genres"] = string.Join(",", castIds.Select(s => s.ToString()));
-            return this;
-        }
-
-        /// <summary>
-        /// Only include movies with the specified genres.
-        /// This method performs an AND query.
-        /// </summary>
-        public DiscoverMovie IncludeWithAllOfGenre(IEnumerable<Genre> genres)
-        {
-            return IncludeWithAllOfGenre(genres.Select(s => s.Id));
-        }
-
-        /// <summary>
-        /// Only include movies with the specified keywords. Expected value is an integer (the id of a keyword).
-        /// This method performs an AND query.
-        /// </summary>
-        public DiscoverMovie IncludeWithAllOfKeywords(IEnumerable<int> keywordIds)
-        {
-            Parameters["with_keywords"] = string.Join(",", keywordIds.Select(s => s.ToString()));
-            return this;
-        }
-
-        /// <summary>
-        /// Only include movies with the specified keywords.
-        /// This method performs an AND query.
-        /// </summary>
-        public DiscoverMovie IncludeWithAllOfKeywords(IEnumerable<Genre> keywords)
-        {
-            return IncludeWithAllOfKeywords(keywords.Select(s => s.Id));
-        }
-
-        /// <summary>
         /// Only include movies that have these person id's added as a cast or crew member. Expected value is an integer (the id or ids of a person).
         /// This method performs an AND query.
         /// </summary>
@@ -177,9 +87,104 @@ namespace TMDbLib.Objects.Discover
         /// Only include movies that have these person id's added as a cast or crew member.
         /// This method performs an AND query.
         /// </summary>
-        public DiscoverMovie IncludeWithAllOfPeople(IEnumerable<Genre> people)
+        public DiscoverMovie IncludeWithAllOfPeople(IEnumerable<SearchPerson> people)
         {
             return IncludeWithAllOfPeople(people.Select(s => s.Id));
+        }
+
+        /// <summary>
+        /// Only include movies that have this company id added as a crew member. Expected value is an integer (the id of a company).
+        /// This method performs an AND query.
+        /// </summary>
+        public DiscoverMovie IncludeWithAllOfCompany(IEnumerable<int> companyIds)
+        {
+            Parameters["with_companies"] = string.Join(",", companyIds.Select(s => s.ToString()));
+            return this;
+        }
+
+        /// <summary>
+        /// Only include movies that have this company id added as a crew member.
+        /// This method performs an AND query.
+        /// </summary>
+        public DiscoverMovie IncludeWithAllOfCompany(IEnumerable<SearchCompany> companies)
+        {
+            return IncludeWithAllOfCompany(companies.Select(s => s.Id));
+        }
+
+        /// <summary>
+        /// Only include movies with the specified genres. Expected value is an integer (the id of a genre).
+        /// This method performs an AND query.
+        /// </summary>
+        public DiscoverMovie IncludeWithAllOfGenre(IEnumerable<int> genreIds)
+        {
+            Parameters["with_genres"] = string.Join(",", genreIds.Select(s => s.ToString()));
+            return this;
+        }
+
+        /// <summary>
+        /// Only include movies with the specified genres.
+        /// This method performs an AND query.
+        /// </summary>
+        public DiscoverMovie IncludeWithAllOfGenre(IEnumerable<Genre> genres)
+        {
+            return IncludeWithAllOfGenre(genres.Select(s => s.Id));
+        }
+
+        /// <summary>
+        /// Only include movies with the specified genres. Expected value is an integer (the id of a genre).
+        /// This method performs an AND query.
+        /// </summary>
+        public DiscoverMovie ExcludeWithAllOfGenre(IEnumerable<int> genreIds)
+        {
+            Parameters["without_genres"] = string.Join(",", genreIds.Select(s => s.ToString()));
+            return this;
+        }
+
+        /// <summary>
+        /// Only include movies with the specified genres.
+        /// This method performs an AND query.
+        /// </summary>
+        public DiscoverMovie ExcludeWithAllOfGenre(IEnumerable<Genre> genres)
+        {
+            return ExcludeWithAllOfGenre(genres.Select(s => s.Id));
+        }
+
+        /// <summary>
+        /// Only include movies with the specified keywords. Expected value is an integer (the id of a keyword).
+        /// This method performs an AND query.
+        /// </summary>
+        public DiscoverMovie IncludeWithAllOfKeyword(IEnumerable<int> keywordIds)
+        {
+            Parameters["with_keywords"] = string.Join(",", keywordIds.Select(s => s.ToString()));
+            return this;
+        }
+
+        /// <summary>
+        /// Only include movies with the specified keywords.
+        /// This method performs an AND query.
+        /// </summary>
+        public DiscoverMovie IncludeWithAllOfKeyword(IEnumerable<SearchKeyword> keywords)
+        {
+            return IncludeWithAllOfKeyword(keywords.Select(s => s.Id));
+        }
+
+        /// <summary>
+        /// Only include movies with the specified keywords. Expected value is an integer (the id of a keyword).
+        /// This method performs an AND query.
+        /// </summary>
+        public DiscoverMovie ExcludeWithAllOfKeyword(IEnumerable<int> keywordIds)
+        {
+            Parameters["without_keywords"] = string.Join(",", keywordIds.Select(s => s.ToString()));
+            return this;
+        }
+
+        /// <summary>
+        /// Only include movies with the specified keywords.
+        /// This method performs an AND query.
+        /// </summary>
+        public DiscoverMovie ExcludeWithAllOfKeyword(IEnumerable<SearchKeyword> keywords)
+        {
+            return ExcludeWithAllOfKeyword(keywords.Select(s => s.Id));
         }
 
         /// <summary>
@@ -202,25 +207,6 @@ namespace TMDbLib.Objects.Discover
         }
 
         /// <summary>
-        /// Only include movies that have this company id added as a crew member. Expected value is an integer (the id of a company).
-        /// This method performs an OR query.
-        /// </summary>
-        public DiscoverMovie IncludeWithAnyOfCompany(IEnumerable<int> companyIds)
-        {
-            Parameters["with_companies"] = string.Join("|", companyIds.Select(s => s.ToString()));
-            return this;
-        }
-
-        /// <summary>
-        /// Only include movies that have this company id added as a crew member.
-        /// This method performs an OR query.
-        /// </summary>
-        public DiscoverMovie IncludeWithAnyOfCompany(IEnumerable<Company> companies)
-        {
-            return IncludeWithAnyOfCompany(companies.Select(s => s.Id));
-        }
-
-        /// <summary>
         /// Only include movies that have this person id added as a crew member. Expected value is an integer (the id of a person).
         /// This method performs an OR query.
         /// </summary>
@@ -240,44 +226,6 @@ namespace TMDbLib.Objects.Discover
         }
 
         /// <summary>
-        /// Only include movies with the specified genres. Expected value is an integer (the id of a genre).
-        /// This method performs an OR query.
-        /// </summary>
-        public DiscoverMovie IncludeWithAnyOfGenre(IEnumerable<int> castIds)
-        {
-            Parameters["with_genres"] = string.Join("|", castIds.Select(s => s.ToString()));
-            return this;
-        }
-
-        /// <summary>
-        /// Only include movies with the specified genres.
-        /// This method performs an OR query.
-        /// </summary>
-        public DiscoverMovie IncludeWithAnyOfGenre(IEnumerable<Genre> genres)
-        {
-            return IncludeWithAnyOfGenre(genres.Select(s => s.Id));
-        }
-
-        /// <summary>
-        /// Only include movies with the specified keywords. Expected value is an integer (the id of a keyword).
-        /// This method performs an OR query.
-        /// </summary>
-        public DiscoverMovie IncludeWithAnyOfKeywords(IEnumerable<int> keywordIds)
-        {
-            Parameters["with_keywords"] = string.Join("|", keywordIds.Select(s => s.ToString()));
-            return this;
-        }
-
-        /// <summary>
-        /// Only include movies with the specified keywords.
-        /// This method performs an OR query.
-        /// </summary>
-        public DiscoverMovie IncludeWithAnyOfKeywords(IEnumerable<Genre> keywords)
-        {
-            return IncludeWithAnyOfKeywords(keywords.Select(s => s.Id));
-        }
-
-        /// <summary>
         /// Only include movies that have these person id's added as a cast or crew member. Expected value is an integer (the id or ids of a person).
         /// This method performs an OR query.
         /// </summary>
@@ -291,9 +239,104 @@ namespace TMDbLib.Objects.Discover
         /// Only include movies that have these person id's added as a cast or crew member.
         /// This method performs an OR query.
         /// </summary>
-        public DiscoverMovie IncludeWithAnyOfPeople(IEnumerable<Genre> people)
+        public DiscoverMovie IncludeWithAnyOfPeople(IEnumerable<SearchPerson> people)
         {
             return IncludeWithAnyOfPeople(people.Select(s => s.Id));
+        }
+
+        /// <summary>
+        /// Only include movies that have this company id added as a crew member. Expected value is an integer (the id of a company).
+        /// This method performs an OR query.
+        /// </summary>
+        public DiscoverMovie IncludeWithAnyOfCompany(IEnumerable<int> companyIds)
+        {
+            Parameters["with_companies"] = string.Join("|", companyIds.Select(s => s.ToString()));
+            return this;
+        }
+
+        /// <summary>
+        /// Only include movies that have this company id added as a crew member.
+        /// This method performs an OR query.
+        /// </summary>
+        public DiscoverMovie IncludeWithAnyOfCompany(IEnumerable<SearchCompany> companies)
+        {
+            return IncludeWithAnyOfCompany(companies.Select(s => s.Id));
+        }
+
+        /// <summary>
+        /// Only include movies with the specified genres. Expected value is an integer (the id of a genre).
+        /// This method performs an OR query.
+        /// </summary>
+        public DiscoverMovie IncludeWithAnyOfGenre(IEnumerable<int> genreIds)
+        {
+            Parameters["with_genres"] = string.Join("|", genreIds.Select(s => s.ToString()));
+            return this;
+        }
+
+        /// <summary>
+        /// Only include movies with the specified genres.
+        /// This method performs an OR query.
+        /// </summary>
+        public DiscoverMovie IncludeWithAnyOfGenre(IEnumerable<Genre> genres)
+        {
+            return IncludeWithAnyOfGenre(genres.Select(s => s.Id));
+        }
+
+        /// <summary>
+        /// Only include movies with the specified genres. Expected value is an integer (the id of a genre).
+        /// This method performs an OR query.
+        /// </summary>
+        public DiscoverMovie ExcludeWithAnyOfGenre(IEnumerable<int> genreIds)
+        {
+            Parameters["without_genres"] = string.Join("|", genreIds.Select(s => s.ToString()));
+            return this;
+        }
+
+        /// <summary>
+        /// Only include movies with the specified genres.
+        /// This method performs an OR query.
+        /// </summary>
+        public DiscoverMovie ExcludeWithAnyOfGenre(IEnumerable<Genre> genres)
+        {
+            return ExcludeWithAnyOfGenre(genres.Select(s => s.Id));
+        }
+
+        /// <summary>
+        /// Only include movies with the specified keywords. Expected value is an integer (the id of a keyword).
+        /// This method performs an OR query.
+        /// </summary>
+        public DiscoverMovie IncludeWithAnyOfKeyword(IEnumerable<int> keywordIds)
+        {
+            Parameters["with_keywords"] = string.Join("|", keywordIds.Select(s => s.ToString()));
+            return this;
+        }
+
+        /// <summary>
+        /// Only include movies with the specified keywords.
+        /// This method performs an OR query.
+        /// </summary>
+        public DiscoverMovie IncludeWithAnyOfKeyword(IEnumerable<SearchKeyword> keywords)
+        {
+            return IncludeWithAnyOfKeyword(keywords.Select(s => s.Id));
+        }
+
+        /// <summary>
+        /// Exclude movies with the specified keywords. Expected value is an integer (the id of a keyword).
+        /// This method performs an OR query.
+        /// </summary>
+        public DiscoverMovie ExcludeWithAnyOfKeyword(IEnumerable<int> keywordIds)
+        {
+            Parameters["without_keywords"] = string.Join("|", keywordIds.Select(s => s.ToString()));
+            return this;
+        }
+
+        /// <summary>
+        /// Only include movies with the specified keywords.
+        /// This method performs an OR query.
+        /// </summary>
+        public DiscoverMovie ExcludeWithAnyOfKeyword(IEnumerable<SearchKeyword> keywords)
+        {
+            return ExcludeWithAnyOfKeyword(keywords.Select(s => s.Id));
         }
 
         /// <summary>
@@ -306,12 +349,31 @@ namespace TMDbLib.Objects.Discover
         }
 
         /// <summary>
-        /// Filter the results by all available release dates that have the specified value added as a year. Expected value is an integer (year).
+        /// Available options are: popularity.ascpopularity.descrelease_date.ascrelease_date.descrevenue.ascrevenue.descprimary_release_date.ascprimary_release_date.descoriginal_title.ascoriginal_title.descvote_average.ascvote_average.descvote_count.ascvote_count.desc
         /// </summary>
-        public DiscoverMovie WhereAnyReleaseDateIsInYear(int year)
+        public DiscoverMovie OrderBy(string sortBy)
         {
-            Parameters["year"] = year.ToString("0000");
+            DiscoverMovieSortBy movieSortBy = DiscoverMovieSortBy.PopularityDesc;
+            Enum.TryParse(sortBy, true, out movieSortBy);
+            
+            return OrderBy(movieSortBy);
+        }
+
+        /// <summary>
+        /// Only include movies with the specified genre. Expected value is an integer (the id of a genre).
+        /// </summary>
+        public DiscoverMovie WhereGenreIs(int genreId)
+        {
+            Parameters["with_genres"] = genreId.ToString();
             return this;
+        }
+
+        /// <summary>
+        /// Only include movies with the specified genre.
+        /// </summary>
+        public DiscoverMovie WhereGenreIs(Genre genre)
+        {
+            return WhereGenreIs(genre.Id);
         }
 
         /// <summary>
@@ -319,8 +381,6 @@ namespace TMDbLib.Objects.Discover
         /// </summary>
         public DiscoverMovie WhereCertificationIs(string country, string certification)
         {
-            ClearCertification();
-
             Parameters["certification_country"] = country;
             Parameters["certification"] = certification;
 
@@ -330,10 +390,19 @@ namespace TMDbLib.Objects.Discover
         /// <summary>
         /// Only include movies with this certification and lower. Expected value is a valid certification for the specificed 'certification_country'.
         /// </summary>
+        public DiscoverMovie WhereCertificationIsAtLeast(string country, string maxCertification)
+        {
+            Parameters["certification_country"] = country;
+            Parameters["certification.gte"] = maxCertification;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Only include movies with this certification and lower. Expected value is a valid certification for the specificed 'certification_country'.
+        /// </summary>
         public DiscoverMovie WhereCertificationIsAtMost(string country, string maxCertification)
         {
-            ClearCertification();
-
             Parameters["certification_country"] = country;
             Parameters["certification.lte"] = maxCertification;
 
@@ -345,7 +414,7 @@ namespace TMDbLib.Objects.Discover
         /// </summary>
         public DiscoverMovie WherePrimaryReleaseDateIsAfter(DateTime date)
         {
-            ClearPrimaryReleaseDate();
+            Parameters.Remove("primary_release_year");
 
             Parameters["primary_release_date.gte"] = date.ToString("yyyy-MM-dd");
             return this;
@@ -356,7 +425,7 @@ namespace TMDbLib.Objects.Discover
         /// </summary>
         public DiscoverMovie WherePrimaryReleaseDateIsBefore(DateTime date)
         {
-            ClearPrimaryReleaseDate();
+            Parameters.Remove("primary_release_year");
 
             Parameters["primary_release_date.lte"] = date.ToString("yyyy-MM-dd");
             return this;
@@ -365,8 +434,11 @@ namespace TMDbLib.Objects.Discover
         /// <summary>
         /// Filter the results so that only the primary release date year has this value. Expected value is a year.
         /// </summary>
-        public DiscoverMovie WherePrimaryReleaseIsInYear(int year)
+        public DiscoverMovie WherePrimaryReleaseDateIsInYear(int year)
         {
+            Parameters.Remove("primary_release_date.gte");
+            Parameters.Remove("primary_release_date.lte");
+
             Parameters["primary_release_year"] = year.ToString("0000");
             return this;
         }
@@ -376,7 +448,7 @@ namespace TMDbLib.Objects.Discover
         /// </summary>
         public DiscoverMovie WhereReleaseDateIsAfter(DateTime date)
         {
-            ClearReleaseDate();
+            Parameters.Remove("year");
 
             Parameters["release_date.gte"] = date.ToString("yyyy-MM-dd");
             return this;
@@ -387,9 +459,21 @@ namespace TMDbLib.Objects.Discover
         /// </summary>
         public DiscoverMovie WhereReleaseDateIsBefore(DateTime date)
         {
-            ClearReleaseDate();
+            Parameters.Remove("year");
 
             Parameters["release_date.lte"] = date.ToString("yyyy-MM-dd");
+            return this;
+        }
+
+        /// <summary>
+        /// Filter the results by all available release dates that have the specified value added as a year. Expected value is an integer (year).
+        /// </summary>
+        public DiscoverMovie WhereReleaseDateIsInYear(int year)
+        {
+            Parameters.Remove("release_date.gte");
+            Parameters.Remove("release_date.lte");
+
+            Parameters["year"] = year.ToString("0000");
             return this;
         }
 
@@ -398,9 +482,6 @@ namespace TMDbLib.Objects.Discover
         /// </summary>
         public DiscoverMovie WhereVoteAverageIsAtLeast(double score)
         {
-            ClearVoteAverage();
-
-            // TODO: Apply culture to the ToString
             Parameters["vote_average.gte"] = score.ToString();
             return this;
         }
@@ -410,8 +491,6 @@ namespace TMDbLib.Objects.Discover
         /// </summary>
         public DiscoverMovie WhereVoteAverageIsAtMost(double score)
         {
-            ClearVoteAverage();
-
             // TODO: Apply culture to the ToString
             Parameters["vote_average.lte"] = score.ToString();
             return this;
@@ -422,8 +501,6 @@ namespace TMDbLib.Objects.Discover
         /// </summary>
         public DiscoverMovie WhereVoteCountIsAtLeast(int count)
         {
-            ClearVoteCount();
-
             Parameters["vote_count.gte"] = count.ToString();
             return this;
         }
@@ -433,8 +510,6 @@ namespace TMDbLib.Objects.Discover
         /// </summary>
         public DiscoverMovie WhereVoteCountIsAtMost(int count)
         {
-            ClearVoteCount();
-
             Parameters["vote_count.lte"] = count.ToString();
             return this;
         }
@@ -463,6 +538,24 @@ namespace TMDbLib.Objects.Discover
         public DiscoverMovie WhereOriginalLanguageIs(string language)
         {
             Parameters["with_original_language"] = language;
+            return this;
+        }
+
+        /// <summary>
+        /// Filter movies by their runtime and only include movies that have a runtime that is equal to or lower than the specified value.
+        /// </summary>
+        public DiscoverMovie WhereRuntimeIsAtLeast(int runtime)
+        {
+            Parameters["with_runtime.gte"] = runtime.ToString();
+            return this;
+        }
+
+        /// <summary>
+        /// Filter movies by their runtime and only include movies that have a runtime that is equal to or lower than the specified value. Expected value is an integer.
+        /// </summary>
+        public DiscoverMovie WhereRuntimeIsAtMost(int runtime)
+        {
+            Parameters["with_runtime.lte"] = runtime.ToString();
             return this;
         }
     }

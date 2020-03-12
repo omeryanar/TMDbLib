@@ -14,7 +14,6 @@ using TMDbLib.Objects.Search;
 using TMDbLib.Objects.Translations;
 using TMDbLib.Rest;
 using TMDbLib.Utilities;
-using Credits = TMDbLib.Objects.Movies.Credits;
 
 namespace TMDbLib.Client
 {

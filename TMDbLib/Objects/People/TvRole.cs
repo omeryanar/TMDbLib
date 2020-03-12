@@ -1,9 +1,9 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using TMDbLib.Objects.Search;
 
 namespace TMDbLib.Objects.People
 {
-    public class TvRole
+    public class TvRole : SearchTv
     {
         [JsonProperty("character")]
         public string Character { get; set; }
@@ -13,20 +13,5 @@ namespace TMDbLib.Objects.People
 
         [JsonProperty("episode_count")]
         public int EpisodeCount { get; set; }
-
-        [JsonProperty("first_air_date")]
-        public DateTime? FirstAirDate { get; set; }
-
-        [JsonProperty("id")]
-        public int Id { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("original_name")]
-        public string OriginalName { get; set; }
-
-        [JsonProperty("poster_path")]
-        public string PosterPath { get; set; }
     }
 }

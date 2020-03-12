@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using TMDbLib.Objects.General;
-using TMDbLib.Objects.TvShows;
 
 namespace TMDbLib.Objects.Search
 {
